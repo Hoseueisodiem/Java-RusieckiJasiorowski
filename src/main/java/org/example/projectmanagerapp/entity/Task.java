@@ -10,7 +10,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
 
-    @Column(nullable = false) // Pole nie może być puste [cite: 16]
+    @Column(nullable = false) 
     private String title;
 
     @Column(columnDefinition = "TEXT")
