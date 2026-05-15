@@ -4,8 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.projectmanagerapp.entity.Project;
-import org.example.projectmanagerapp.repository.ProjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.projectmanagerapp.service.ProjectService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -14,19 +13,22 @@ import java.util.List;
 @Tag(name = "Projects", description = "Operations for managing projects")
 public class ProjectController {
 
-    @Autowired
-    private ProjectRepository projectRepository;
+    private final ProjectService projectService;
+
+    public ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
+    }
 
     @GetMapping
     @Operation(summary = "Get all projects", description = "Returns a list of all projects")
     public List<Project> getAllProjects() {
-        return projectRepository.findAll();
+        return projectService.getAllProjects();
     }
 
     @PostMapping
     @Operation(summary = "Create a project", description = "Adds a new project to the database")
     public Project createProject(@RequestBody Project project) {
-        return projectRepository.save(project);
+        return projectService.saveProject(project);
     }
 
     @PutMapping("/{id}")
@@ -34,14 +36,13 @@ public class ProjectController {
     public Project updateProject(
             @Parameter(description = "ID of the project to update") @PathVariable Long id,
             @RequestBody Project project) {
-        project.setId(id);
-        return projectRepository.save(project);
+        return projectService.updateProject(id, project);
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a project", description = "Deletes a project by ID")
     public void deleteProject(
             @Parameter(description = "ID of the project to delete") @PathVariable Long id) {
-        projectRepository.deleteById(id);
+        projectService.deleteProject(id);
     }
 }
