@@ -2,30 +2,31 @@ package org.example.projectmanagerapp.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.example.projectmanagerapp.entity.Users;
-import org.example.projectmanagerapp.repository.UserRepository;
+import org.example.projectmanagerapp.model.Users;
+import org.example.projectmanagerapp.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@Tag(name = "Users", description = "Operations for managing users")
-public class UsersController {
-    private final UserRepository userRepository;
+@Tag(name = "User Controller", description = "Zarządzanie użytkowniikami")
+public class UserController {
 
-    public UsersController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
-    @Operation(summary = "Get all users", description = "Returns a list of all users")
+    @Operation(summary = "Pobierz użytkowników", description = "Zwraca pełną listę z bazy")
     public List<Users> getAllUsers() {
-        return userRepository.findAll();
+        return userService.getAllUsers();
     }
 
     @PostMapping
-    @Operation(summary = "Create a user", description = "Adds a new user to the database")
+    @Operation(summary = "Dodaj użytkownika", description = "Tworzy nowego użytkownika")
     public Users createUser(@RequestBody Users user) {
-        return userRepository.save(user);
+        return userService.saveUser(user);
     }
 }
