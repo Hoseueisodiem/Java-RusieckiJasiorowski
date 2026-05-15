@@ -1,6 +1,6 @@
 package org.example.projectmanagerapp.service;
 
-import org.example.projectmanagerapp.model.Users;
+import org.example.projectmanagerapp.entity.Users;
 import org.example.projectmanagerapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;

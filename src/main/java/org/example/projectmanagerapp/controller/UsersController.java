@@ -2,14 +2,14 @@ package org.example.projectmanagerapp.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.example.projectmanagerapp.model.Users;
+import org.example.projectmanagerapp.entity.Users;
 import org.example.projectmanagerapp.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@Tag(name = "User Controller", description = "Zarządzanie użytkowniikami")
+@Tag(name = "User Controller", description = "Zarządzanie użytkownikami")
 public class UserController {
 
     private final UserService userService;
