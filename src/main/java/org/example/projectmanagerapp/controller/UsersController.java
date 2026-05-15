@@ -9,23 +9,23 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@Tag(name = "User Controller", description = "Zarządzanie użytkownikami")
-public class UserController {
+@Tag(name = "Users", description = "Operations for managing users")
+public class UsersController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    public UsersController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping
-    @Operation(summary = "Pobierz użytkowników", description = "Zwraca pełną listę z bazy")
+    @Operation(summary = "Get all users", description = "Returns a list of all users")
     public List<Users> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @PostMapping
-    @Operation(summary = "Dodaj użytkownika", description = "Tworzy nowego użytkownika")
+    @Operation(summary = "Create a user", description = "Adds a new user to the database")
     public Users createUser(@RequestBody Users user) {
         return userService.saveUser(user);
     }
