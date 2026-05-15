@@ -1,6 +1,7 @@
 package org.example.projectmanagerapp.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.projectmanagerapp.entity.Users;
 import org.example.projectmanagerapp.service.UserService;
@@ -28,5 +29,21 @@ public class UsersController {
     @Operation(summary = "Create a user", description = "Adds a new user to the database")
     public Users createUser(@RequestBody Users user) {
         return userService.saveUser(user);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update a user", description = "Updates an existing user by ID")
+    public Users updateUser(
+            @Parameter(description = "ID of the user to update") @PathVariable Long id,
+            @RequestBody Users user) {
+        user.setId(id);
+        return userService.saveUser(user);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a user", description = "Deletes a user by ID")
+    public void deleteUser(
+            @Parameter(description = "ID of the user to delete") @PathVariable Long id) {
+        userService.deleteUser(id);
     }
 }
