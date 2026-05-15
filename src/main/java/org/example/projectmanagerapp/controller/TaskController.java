@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.projectmanagerapp.entity.Task;
-import org.example.projectmanagerapp.repository.TaskRepository;
+import org.example.projectmanagerapp.service.TaskService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -13,22 +13,22 @@ import java.util.List;
 @Tag(name = "Tasks", description = "Operations for managing tasks")
 public class TaskController {
 
-    private final TaskRepository taskRepository;
+    private final TaskService taskService;
 
-    public TaskController(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
     @GetMapping
     @Operation(summary = "Get all tasks", description = "Returns a list of all tasks")
     public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+        return taskService.getAllTasks();
     }
 
     @PostMapping
     @Operation(summary = "Create a task", description = "Adds a new task to the database")
     public Task createTask(@RequestBody Task task) {
-        return taskRepository.save(task);
+        return taskService.saveTask(task);
     }
 
     @PutMapping("/{id}")
@@ -36,14 +36,13 @@ public class TaskController {
     public Task updateTask(
             @Parameter(description = "ID of the task to update") @PathVariable Long id,
             @RequestBody Task task) {
-        task.setId(id);
-        return taskRepository.save(task);
+        return taskService.updateTask(id, task);
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a task", description = "Deletes a task by ID")
     public void deleteTask(
             @Parameter(description = "ID of the task to delete") @PathVariable Long id) {
-        taskRepository.deleteById(id);
+        taskService.deleteTask(id);
     }
 }
