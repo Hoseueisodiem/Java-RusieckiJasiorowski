@@ -36,8 +36,7 @@ public class UsersController {
     public Users updateUser(
             @Parameter(description = "ID of the user to update") @PathVariable Long id,
             @RequestBody Users user) {
-        user.setId(id);
-        return userService.saveUser(user);
+        return userService.updateUser(id, user);
     }
 
     @DeleteMapping("/{id}")
