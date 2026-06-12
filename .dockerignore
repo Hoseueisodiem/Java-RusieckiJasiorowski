@@ -1,0 +1,7 @@
+.git
+.idea
+.vscode
+target/*.original
+target/site
+target/surefire-reports
+target/failsafe-reports
