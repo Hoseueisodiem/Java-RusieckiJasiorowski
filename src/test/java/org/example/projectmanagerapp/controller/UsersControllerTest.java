@@ -53,12 +53,18 @@ class UsersControllerTest {
     @DisplayName("Should update a user")
     void testUpdateUser() {
         Users user = new Users();
-        when(userService.saveUser(user)).thenReturn(user);
+        user.setId(1L);
+        user.setUsername("UpdatedUser");
 
-        Users updated = usersController.updateUser(1L, user);
+        when(userService.updateUser(eq(1L), any(Users.class))).thenReturn(user);
 
-        assertNotNull(updated);
-        verify(userService, times(1)).saveUser(user);
+        Users result = usersController.updateUser(1L, user);
+
+        assertNotNull(result);
+        assertEquals(1L, result.getId());
+        assertEquals("UpdatedUser", result.getUsername());
+
+        verify(userService, times(1)).updateUser(eq(1L), any(Users.class));
     }
 
     @Test

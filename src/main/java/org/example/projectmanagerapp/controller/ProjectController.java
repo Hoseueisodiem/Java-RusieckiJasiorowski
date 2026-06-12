@@ -39,6 +39,14 @@ public class ProjectController {
         return projectService.updateProject(id, project);
     }
 
+    @PostMapping("/{projectId}/users")
+    @Operation(summary = "Add user to project", description = "Assigns an existing user to an existing project")
+    public Project addUserToProject(
+            @Parameter(description = "ID of the project") @PathVariable Long projectId,
+            @Parameter(description = "ID of the user") @RequestParam Long userId) {
+        return projectService.addUserToProject(projectId, userId);
+    }
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a project", description = "Deletes a project by ID")
     public void deleteProject(
